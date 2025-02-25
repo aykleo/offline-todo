@@ -1,0 +1,10 @@
+{
+  "name": "Coisinhas da Lay",
+  "integrations": {
+    "CapacitorSQLite": {},
+    "Capacitor": {},
+    "capacitor": {},
+    "TailwindCSS": {}
+  },
+  "type": "react"
+}

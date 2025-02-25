@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Coisinhas da Lay</string>
+    <string name="title_activity_main">Coisinhas da Lay</string>
+    <string name="package_name">com.coisinhas.dalay.app</string>
+    <string name="custom_url_scheme">com.coisinhas.dalay.app</string>
+</resources>
