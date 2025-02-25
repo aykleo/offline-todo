@@ -1,2 +1,11 @@
+@font-face {
+  font-family: Kitty;
+  src: url("../public/assets/fonts/Boldins.ttf");
+}
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --font-Kitty: Kitty, "boldins";
+}

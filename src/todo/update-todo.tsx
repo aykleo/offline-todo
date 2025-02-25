@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../hooks/use-theme";
 
 interface UpdateTodoModalProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
   todoData,
 }) => {
   const [updatedTodo, setUpdatedTodo] = useState(todoData);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setUpdatedTodo(todoData);
@@ -35,27 +37,92 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/25 backdrop-blur-sm bg-opacity-50 flex items-center justify-center">
-      <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-md">
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-1"
-            htmlFor="name"
-          >
-            Nome
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={updatedTodo.name}
-            onChange={(e) =>
-              setUpdatedTodo({ ...updatedTodo, name: e.target.value })
-            }
-            className="input input-primary"
-          />
+      <div
+        className={`p-4 max-w-md mx-auto ${
+          theme === "Dark" ? "" : "bg-gray-100"
+        } rounded-lg max-h-[75vh] overflow-y-auto`}
+      >
+        <div className="flex flex-col md:flex-row md:gap-x-4">
+          <div className="mb-4 md:w-1/3">
+            <label
+              className={`block ${
+                theme === "Dark" ? "" : "text-pink-400"
+              } text-sm font-bold mb-1`}
+              htmlFor="name"
+            >
+              Nome
+            </label>
+            <input
+              id="name"
+              type="text"
+              value={updatedTodo.name}
+              onChange={(e) =>
+                setUpdatedTodo({ ...updatedTodo, name: e.target.value })
+              }
+              className={`input ${
+                theme === "Dark"
+                  ? "input-primary"
+                  : "input-error bg-gray-100 text-pink-400 shadow-pink-200"
+              } shadow-xs`}
+            />
+          </div>
+          <div className="mb-4 md:w-1/3">
+            <label
+              className={`block ${
+                theme === "Dark" ? "" : "text-pink-400"
+              } text-sm font-bold mb-1 `}
+              htmlFor="dueDate"
+            >
+              Vencimento
+            </label>
+            <input
+              id="dueDate"
+              type="date"
+              value={updatedTodo.dueDate}
+              onChange={(e) =>
+                setUpdatedTodo({ ...updatedTodo, dueDate: e.target.value })
+              }
+              className={`input ${
+                theme === "Dark"
+                  ? "input-primary"
+                  : "input-error bg-gray-100 text-pink-400 shadow-pink-200"
+              } shadow-xs`}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className={`block ${
+                theme === "Dark" ? "" : "text-pink-400"
+              } text-sm font-bold mb-1`}
+              htmlFor="status"
+            >
+              Andamento
+            </label>
+            <select
+              id="status"
+              value={updatedTodo.status}
+              onChange={(e) =>
+                setUpdatedTodo({ ...updatedTodo, status: e.target.value })
+              }
+              className={`input ${
+                theme === "Dark"
+                  ? "input-primary"
+                  : "input-error bg-gray-100 text-pink-400 shadow-pink-200"
+              } shadow-xs`}
+            >
+              <option value="waiting">Aguardando</option>
+              <option value="in_progress">Em progresso</option>
+              <option value="completed">Concluído</option>
+              <option value="canceled">Cancelado</option>
+              <option value="urgent">Urgente</option>
+            </select>
+          </div>
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-1"
+            className={`block ${
+              theme === "Dark" ? "" : "text-pink-400"
+            } text-sm font-bold mb-1`}
             htmlFor="description"
           >
             Descrição
@@ -66,52 +133,20 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
             onChange={(e) =>
               setUpdatedTodo({ ...updatedTodo, description: e.target.value })
             }
-            className="textarea textarea-primary bg-white text-black"
+            className={`textarea ${
+              theme === "Dark"
+                ? "textarea-primary"
+                : "textarea-error bg-gray-100 text-pink-400 shadow-pink-200"
+            } shadow-xs md:w-full`}
           />
         </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-1"
-            htmlFor="dueDate"
-          >
-            Data de vencimento
-          </label>
-          <input
-            id="dueDate"
-            type="date"
-            value={updatedTodo.dueDate}
-            onChange={(e) =>
-              setUpdatedTodo({ ...updatedTodo, dueDate: e.target.value })
-            }
-            className="input input-primary"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-1"
-            htmlFor="status"
-          >
-            Andamento
-          </label>
-          <select
-            id="status"
-            value={updatedTodo.status}
-            onChange={(e) =>
-              setUpdatedTodo({ ...updatedTodo, status: e.target.value })
-            }
-            className="input input-primary"
-          >
-            <option value="waiting">Aguardando</option>
-            <option value="in_progress">Em andamento</option>
-            <option value="completed">Concluído</option>
-            <option value="canceled">Cancelado</option>
-            <option value="urgent">Urgente</option>
-          </select>
-        </div>
+
         <div className="flex gap-x-2 flex-row">
           <button
             onClick={onClose}
-            className="w-full bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={`w-full ${
+              theme === "Dark" ? "" : "border border-pink-400 text-pink-400"
+            } font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline`}
           >
             Cancelar
           </button>
@@ -125,7 +160,11 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
                 updatedTodo.status
               )
             }
-            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={`${
+              theme === "Dark"
+                ? ""
+                : "border border-white text-white bg-pink-300"
+            } w-full rounded-lg font-bold py-2 px-4 focus:outline-none focus:shadow-outline"`}
           >
             Atualizar
           </button>

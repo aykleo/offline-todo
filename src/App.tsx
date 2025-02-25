@@ -1,4 +1,4 @@
-import { ThemeProvider } from "./hooks/the-provider";
+import { ThemeProvider } from "./hooks/theme-provider";
 import TodoApp from "./todo/todo-main-page";
 
 function App() {
