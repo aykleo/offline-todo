@@ -24,13 +24,15 @@ const TodoDetailsModal: React.FC<TodoDetailsModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black/25 backdrop-blur-sm bg-opacity-50 flex items-center justify-center">
       <div
-        className={`p-4 max-w-60 md:max-w-96 gap-y-0 flex flex-col mx-auto ${
-          theme === "Dark" ? "" : "text-pink-300 bg-gray-100"
+        className={`p-4 max-w-2/3 gap-y-0 flex flex-col mx-auto ${
+          theme === "Dark"
+            ? "bg-black text-purple-400"
+            : "text-pink-300 bg-gray-100"
         } rounded-lg shadow-md max-h-[75vh]`}
       >
         <p
           className={`${
-            theme === "Dark" ? "" : "text-pink-400"
+            theme === "Dark" ? "text-purple-300" : "text-pink-400"
           } font-bold text-xl truncate max-w-56 md:max-w-92`}
         >
           {todo.name}
@@ -74,7 +76,9 @@ const TodoDetailsModal: React.FC<TodoDetailsModalProps> = ({
         <button
           onClick={onClose}
           className={`w-full ${
-            theme === "Dark" ? "" : "border border-pink-400 text-pink-400"
+            theme === "Dark"
+              ? "border border-purple-500 text-purple-400"
+              : "border border-pink-400 text-pink-400"
           } font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mt-5`}
         >
           Fechar

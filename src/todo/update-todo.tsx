@@ -38,15 +38,15 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black/25 backdrop-blur-sm bg-opacity-50 flex items-center justify-center">
       <div
-        className={`p-4 max-w-md mx-auto ${
-          theme === "Dark" ? "" : "bg-gray-100"
+        className={`p-4 mx-auto ${
+          theme === "Dark" ? "bg-black" : "bg-gray-100"
         } rounded-lg max-h-[75vh] overflow-y-auto`}
       >
         <div className="flex flex-col md:flex-row md:gap-x-4">
           <div className="mb-4 md:w-1/3">
             <label
               className={`block ${
-                theme === "Dark" ? "" : "text-pink-400"
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
               } text-sm font-bold mb-1`}
               htmlFor="name"
             >
@@ -61,7 +61,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
               }
               className={`input ${
                 theme === "Dark"
-                  ? "input-primary"
+                  ? "input-neutral border-purple-500 bg-black text-purple-400 shadow-purple-800"
                   : "input-error bg-gray-100 text-pink-400 shadow-pink-200"
               } shadow-xs`}
             />
@@ -69,7 +69,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
           <div className="mb-4 md:w-1/3">
             <label
               className={`block ${
-                theme === "Dark" ? "" : "text-pink-400"
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
               } text-sm font-bold mb-1 `}
               htmlFor="dueDate"
             >
@@ -84,7 +84,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
               }
               className={`input ${
                 theme === "Dark"
-                  ? "input-primary"
+                  ? "input-neutral border-purple-500 bg-black text-purple-400 shadow-purple-800"
                   : "input-error bg-gray-100 text-pink-400 shadow-pink-200"
               } shadow-xs`}
             />
@@ -92,7 +92,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
           <div className="mb-4">
             <label
               className={`block ${
-                theme === "Dark" ? "" : "text-pink-400"
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
               } text-sm font-bold mb-1`}
               htmlFor="status"
             >
@@ -106,7 +106,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
               }
               className={`input ${
                 theme === "Dark"
-                  ? "input-primary"
+                  ? "input-neutral border-purple-500 bg-black text-purple-400 shadow-purple-800"
                   : "input-error bg-gray-100 text-pink-400 shadow-pink-200"
               } shadow-xs`}
             >
@@ -121,7 +121,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
         <div className="mb-4">
           <label
             className={`block ${
-              theme === "Dark" ? "" : "text-pink-400"
+              theme === "Dark" ? "text-purple-400" : "text-pink-400"
             } text-sm font-bold mb-1`}
             htmlFor="description"
           >
@@ -135,7 +135,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
             }
             className={`textarea ${
               theme === "Dark"
-                ? "textarea-primary"
+                ? "textarea-neutral border-purple-500 bg-black text-purple-400 shadow-purple-800"
                 : "textarea-error bg-gray-100 text-pink-400 shadow-pink-200"
             } shadow-xs md:w-full`}
           />
@@ -145,7 +145,9 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
           <button
             onClick={onClose}
             className={`w-full ${
-              theme === "Dark" ? "" : "border border-pink-400 text-pink-400"
+              theme === "Dark"
+                ? "border border-purple-500 text-purple-400"
+                : "border border-pink-400 text-pink-400"
             } font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline`}
           >
             Cancelar
@@ -162,7 +164,7 @@ const UpdateTodoModal: React.FC<UpdateTodoModalProps> = ({
             }
             className={`${
               theme === "Dark"
-                ? ""
+                ? "border border-purple-400 text-text-white bg-purple-700"
                 : "border border-white text-white bg-pink-300"
             } w-full rounded-lg font-bold py-2 px-4 focus:outline-none focus:shadow-outline"`}
           >

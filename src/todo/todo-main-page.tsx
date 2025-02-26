@@ -41,6 +41,7 @@ export const TodoApp = () => {
   });
   const [currentTodo, setCurrentTodo] = useState<Todo | null>(null);
   const [todoToDelete, setTodoToDelete] = useState<Todo | null>(null);
+  const [hideCalendar, setHideCalendar] = useState<string[]>([]);
 
   useEffect(() => {
     const loadDB = async () => {
@@ -142,53 +143,49 @@ export const TodoApp = () => {
     setShowDetailsModal(true);
   };
 
+  const toggleCalendarVisibility = (dueDate: string | null) => {
+    const dateKey = dueDate || "undefined";
+    if (hideCalendar.includes(dateKey)) {
+      setHideCalendar(hideCalendar.filter((date) => date !== dateKey));
+    } else {
+      setHideCalendar([...hideCalendar, dateKey]);
+    }
+  };
+
   return (
     <div
       className={`h-screen ${
         theme === "Dark"
-          ? "bg-black"
-          : "bg-gradient-to-t from-pink-100 via-pink-50 to-pink-200 font-Kitty tracking-widest"
-      } text-white flex flex-col text-sm`}
+          ? "bg-gradient-to-t from-black via-purple-900 to-black"
+          : "bg-gradient-to-t from-pink-100 via-pink-50 to-pink-200"
+      } text-white flex flex-col text-sm font-Kitty tracking-widest`}
     >
       <div className="flex flex-col md:flex-row items-center gap-y-1 justify-around pt-12 md:pt-5 pb-1">
-        <h1 className="text-4xl font-bold w-screen md:w-1/2 items-center justify-between px-4 flex">
+        <h1 className="text-5xl font-bold w-screen  items-center justify-between px-4 flex">
           <span
             className={`${
-              theme === "Dark" ? "text-white" : "text-pink-500"
-            } pt-1 relative`}
+              theme === "Dark" ? "text-purple-300" : "text-pink-500"
+            } pt-1 relative tracking-widest`}
           >
-            Tarefas da Lay{" "}
-            {theme === "Dark" ? (
-              <></>
-            ) : (
-              <img
-                src="public\assets\icons\hello-kitty.png"
-                alt="kitty"
-                className="size-6 absolute -right-4.5 -top-0.5"
-              />
-            )}
+            Tarefas
           </span>
-          <ThemeBtn />
-        </h1>
-
-        <div className="w-screen md:w-1/2 flex items-center justify-evenly md:justify-between px-4">
           <button
             className={` border rounded-full ${
               theme === "Dark"
-                ? ""
+                ? "border-purple-300 shadow-purple-400 shadow-xs text-purple-400"
                 : "border-pink-400 shadow-pink-400 shadow-xs text-white"
             }  p-1 flex px-2 items-center gap-x-2`}
             onClick={clearCompletedTodos}
           >
             <EraserIcon
               className={`size-5 ${
-                theme === "Dark" ? "text-white" : "text-pink-400"
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
               }`}
             />
             <span
               className={`text-xs pt-1 ${
-                theme === "Dark" ? "text-white" : "text-pink-400"
-              }`}
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
+              } hidden md:block`}
             >
               Limpar completos
             </span>
@@ -197,61 +194,66 @@ export const TodoApp = () => {
           <button
             className={`border rounded-full ${
               theme === "Dark"
-                ? ""
+                ? "border-purple-300 shadow-purple-400 shadow-xs text-purple-400"
                 : "border-pink-400 shadow-pink-400 shadow-xs text-white"
             }  p-1 flex px-2 items-center gap-x-2`}
             onClick={() => setShowAddModal(true)}
           >
             <CalendarPlusIcon
               className={`size-5 ${
-                theme === "Dark" ? "text-white" : "text-pink-400"
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
               }`}
             />
             <span
               className={`text-xs pt-1 ${
-                theme === "Dark" ? "text-white" : "text-pink-400"
-              }`}
+                theme === "Dark" ? "text-purple-400" : "text-pink-400"
+              } hidden md:block`}
             >
               Adicionar tarefa
             </span>
           </button>
-        </div>
+          <ThemeBtn />
+        </h1>
       </div>
 
       <section className="flex-1 p-4 md:p-0 overflow-y-auto">
-        <ul className="space-y-6 md:flex md:flex-wrap md:space-x-4 md:items-start md:justify-between md:px-6">
+        <ul className="space-y-1 md:flex md:flex-wrap md:space-x-0 md:items-start md:justify-between md:px-0">
           {sortedDates.map((dueDate) => (
             <li
               key={dueDate}
-              className={`${
-                theme === "Dark" ? "border-blue-600" : "border-pink-300"
-              } md:border-b-0 border-b rounded-xl rounded-t-4xl p-2 md:w-1/4`}
+              className={`rounded-xl rounded-t-4xl p-2 md:w-1/3`}
             >
               {dueDate ? (
                 <h3
                   className={`relative text-lg md:text-xs flex items-center justify-center w-full ${
                     theme === "Dark"
-                      ? "bg-black"
-                      : "bg-pink-300 shadow-pink-200 shadow-sm"
-                  } rounded-t-full font-bold mb-2 pt-1`}
+                      ? "bg-purple-700 shadow-purple-600 shadow-sm "
+                      : "bg-pink-300 shadow-pink-200 shadow-sm "
+                  } rounded-t-full font-bold mb-2 pt-1 transition-all duration-100 ${
+                    hideCalendar.includes(dueDate || "undefined")
+                      ? "rounded-b-full"
+                      : ""
+                  }`}
                 >
                   {new Date(dueDate).toLocaleDateString("pt-BR", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
                   })}
-                  <Calendar1Icon className="size-5 md:size-3 absolute right-6 md:right-3 bottom-2 md:bottom-1" />
+                  <button onClick={() => toggleCalendarVisibility(dueDate)}>
+                    <Calendar1Icon className="size-5 md:size-3 absolute right-6 md:right-3 bottom-2 md:bottom-1" />
+                  </button>
                   {theme === "Dark" ? (
                     <img
                       src="public\assets\icons\flor-azul.png"
                       alt="flor_azul"
-                      className="size-6 md:size-4 absolute left-0 top-0"
+                      className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
                   ) : (
                     <img
                       src="public\assets\icons\flor-amarela.png"
                       alt="flor_amarela"
-                      className="size-6 md:size-4 absolute left-0 top-0"
+                      className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
                   )}
                 </h3>
@@ -259,23 +261,29 @@ export const TodoApp = () => {
                 <h3
                   className={`${
                     theme === "Dark"
-                      ? "bg-black"
+                      ? "bg-purple-700 shadow-purple-600 shadow-sm "
                       : "bg-pink-300 shadow-pink-200 shadow-sm"
-                  }    px-2 relative flex items-center text-lg md:text-xs justify-center pt-1 w-full rounded-t-full font-bold mb-2`}
+                  }    px-2 relative flex items-center text-lg md:text-xs justify-center pt-1 w-full rounded-t-full transition-all duration-100 font-bold mb-2 ${
+                    hideCalendar.includes(dueDate || "undefined")
+                      ? "rounded-b-full"
+                      : ""
+                  }`}
                 >
                   INDEFINIDA
-                  <Calendar1Icon className="size-5 md:size-3 absolute right-6 md:right-3 bottom-2 md:bottom-1" />
+                  <button onClick={() => toggleCalendarVisibility(null)}>
+                    <Calendar1Icon className="size-5 md:size-3 absolute right-6 md:right-3 bottom-2 md:bottom-1" />
+                  </button>
                   {theme === "Dark" ? (
                     <img
                       src="public\assets\icons\flor-azul.png"
                       alt="flor_azul"
-                      className="size-6 md:size-4 absolute left-0 top-0"
+                      className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
                   ) : (
                     <img
                       src="public\assets\icons\flor-amarela.png"
                       alt="flor_amarela"
-                      className="size-6 md:size-4 absolute left-0 top-0"
+                      className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
                   )}
                 </h3>
@@ -284,36 +292,40 @@ export const TodoApp = () => {
                 {groupedTodos[dueDate].map((todo) => (
                   <li
                     key={todo.id}
-                    className={`py-1 px-3 md:py-0.5 md:px-2 md:text-xs relative rounded-xl flex justify-between items-center ${(() => {
+                    className={`py-1 px-3 md:py-0.5 md:px-2 md:text-xs relative rounded-xl flex justify-between items-center ${
+                      hideCalendar.includes(dueDate || "undefined")
+                        ? "hidden"
+                        : ""
+                    } ${(() => {
                       switch (todo.status) {
                         case "completed":
                           return `${
                             theme === "Dark"
-                              ? "bg-black"
+                              ? "bg-green-500 border-black "
                               : "bg-green-500/75 shadow-green-200 "
                           }  border shadow-xs`;
                         case "in_progress":
                           return `${
                             theme === "Dark"
-                              ? "bg-black"
+                              ? "bg-yellow-500 border-black "
                               : "bg-yellow-500/75 shadow-yellow-200 "
                           }  border shadow-xs`;
                         case "canceled":
                           return `${
                             theme === "Dark"
-                              ? "bg-black"
+                              ? "bg-gray-500 border-black "
                               : "bg-gray-500/25 shadow-gray-200 "
-                          }  border shadow-xs opacity-50`;
+                          }  border shadow-xs opacity-40`;
                         case "urgent":
                           return `${
                             theme === "Dark"
-                              ? "bg-black"
+                              ? "bg-red-500 border-black"
                               : "bg-red-500/75 shadow-red-200 "
                           }  border shadow-xs`;
                         case "waiting":
                           return `${
                             theme === "Dark"
-                              ? "bg-black"
+                              ? "bg-gray-500 border-black"
                               : "bg-gray-500/75 shadow-gray-200 "
                           }  border shadow-xs`;
                         default:
@@ -335,7 +347,7 @@ export const TodoApp = () => {
                     }}
                   >
                     {todo.status === "canceled" ? (
-                      <div className="absolute w-[95%] right-2 md:right-1 bg-white h-[2px]" />
+                      <div className="absolute w-[95%] right-2 md:right-1 bg-gray-300 rounded-full h-[2px]" />
                     ) : (
                       <></>
                     )}
