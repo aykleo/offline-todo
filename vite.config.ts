@@ -10,7 +10,13 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "robots.txt", "apple-touch-icon.png"],
+      includeAssets: [
+        "favicon.svg",
+        "robots.txt",
+        "apple-touch-icon.png",
+        "assets/icons/flor-azul.png",
+        "assets/icons/flor-amarela.png",
+      ],
       manifest: {
         name: "Coisinhas da Lay",
         short_name: "Tarefas",

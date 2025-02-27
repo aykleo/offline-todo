@@ -17,9 +17,9 @@ export async function scheduleUrgentTodoNotification(
     now.getFullYear(),
     now.getMonth(),
     now.getDate(),
-    now.getHours(),
-    now.getMinutes(),
-    now.getSeconds() + 5
+    9,
+    0,
+    0
   );
   if (firstTrigger < now) {
     firstTrigger.setDate(firstTrigger.getDate() + 1);

@@ -277,13 +277,13 @@ export const TodoApp = () => {
                   </button>
                   {theme === "Dark" ? (
                     <img
-                      src="public\assets\icons\flor-azul.png"
+                      src="/assets/icons/flor-azul.png"
                       alt="flor_azul"
                       className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
                   ) : (
                     <img
-                      src="public\assets\icons\flor-amarela.png"
+                      src="/assets/icons/flor-amarela.png"
                       alt="flor_amarela"
                       className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
@@ -307,13 +307,13 @@ export const TodoApp = () => {
                   </button>
                   {theme === "Dark" ? (
                     <img
-                      src="public\assets\icons\flor-azul.png"
+                      src="/assets/icons/flor-azul.png"
                       alt="flor_azul"
                       className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
                   ) : (
                     <img
-                      src="public\assets\icons\flor-amarela.png"
+                      src="/assets/icons/flor-amarela.png"
                       alt="flor_amarela"
                       className="size-5 md:size-4 absolute left-2 top-2 md:top-0.5"
                     />
