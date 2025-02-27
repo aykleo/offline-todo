@@ -15,8 +15,13 @@ import {
   Trash2Icon,
 } from "lucide-react";
 import { ThemeBtn } from "../components/theme-btn";
+import {
+  checkHasNotification,
+  cleanupNotifications,
+  scheduleUrgentTodoNotification,
+} from "../lib/capacitor-notifications";
 
-interface Todo {
+export interface Todo {
   id: number;
   name: string;
   description: string;
@@ -90,6 +95,27 @@ export const TodoApp = () => {
       "UPDATE todos SET name = ?, description = ?, dueDate = ?, status = ? WHERE id = ?;",
       [name, description, dueDate, status, id]
     );
+    const notificationTitle = `A tarefa ${name} está pendente ${
+      !dueDate
+        ? ""
+        : `para dia ${new Date(dueDate).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}`
+    }!`;
+
+    if (status === "urgent") {
+      await checkHasNotification(id.toString());
+      await scheduleUrgentTodoNotification(
+        id.toString(),
+        notificationTitle,
+        description
+      );
+    }
+    if (status !== "urgent") {
+      await checkHasNotification(id.toString());
+    }
     fetchTodos(db);
     setShowUpdateModal(false);
   };
@@ -100,6 +126,7 @@ export const TodoApp = () => {
       "completed",
       id,
     ]);
+    await checkHasNotification(id.toString());
     fetchTodos(db);
   };
 
@@ -107,6 +134,7 @@ export const TodoApp = () => {
     if (todoToDelete && db) {
       await db.run("DELETE FROM todos WHERE id = ?;", [todoToDelete.id]);
       fetchTodos(db);
+      await checkHasNotification(todoToDelete.id.toString());
       setShowDeleteModal(false);
     }
   };
@@ -119,6 +147,10 @@ export const TodoApp = () => {
     ]);
     fetchTodos(db);
   };
+
+  useEffect(() => {
+    cleanupNotifications(todos);
+  }, []); //eslint-disable-line
 
   const groupedTodos = todos.reduce((acc, todo) => {
     if (!acc[todo.dueDate]) {
