@@ -23,16 +23,18 @@ const AddTodoModal: React.FC<AddTodoModalProps> = ({
   if (!isOpen) return null;
 
   const handleSave = () => {
-    if (
-      !todoData.name.trim()
-      //||
-      // !todoData.description.trim() ||
-      // !todoData.dueDate.trim()
-    ) {
+    if (!todoData.name.trim()) {
       alert("Por favor insira um nome para a tarefa.");
       return;
     }
-    onSave(todoData.name, todoData.description, todoData.dueDate);
+
+    let localDateString = "";
+    if (todoData.dueDate) {
+      const dueDate = new Date(todoData.dueDate);
+      localDateString = dueDate.toISOString().split("T")[0];
+    }
+
+    onSave(todoData.name, todoData.description, localDateString);
     setTodoData({ name: "", description: "", dueDate: "" });
   };
 

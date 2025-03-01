@@ -98,7 +98,7 @@ export const TodoApp = () => {
     const notificationTitle = `A tarefa ${name} está pendente ${
       !dueDate
         ? ""
-        : `para dia ${new Date(dueDate).toLocaleDateString("pt-BR", {
+        : `para dia ${parseLocalDate(dueDate).toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -184,6 +184,12 @@ export const TodoApp = () => {
     }
   };
 
+  const parseLocalDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+
+    return new Date(year, month - 1, day);
+  };
+
   return (
     <div
       className={`h-screen ${
@@ -267,7 +273,7 @@ export const TodoApp = () => {
                       : ""
                   }`}
                 >
-                  {new Date(dueDate).toLocaleDateString("pt-BR", {
+                  {parseLocalDate(dueDate).toLocaleDateString("pt-BR", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
@@ -301,7 +307,7 @@ export const TodoApp = () => {
                       : ""
                   }`}
                 >
-                  INDEFINIDA
+                  SEM DATA
                   <button onClick={() => toggleCalendarVisibility(null)}>
                     <Calendar1Icon className="size-5 md:size-3 absolute right-6 md:right-3 bottom-2 md:bottom-1" />
                   </button>

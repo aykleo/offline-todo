@@ -13,6 +13,12 @@ interface TodoDetailsModalProps {
   } | null;
 }
 
+const parseLocalDate = (dateString: string) => {
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  return new Date(year, month - 1, day);
+};
+
 const TodoDetailsModal: React.FC<TodoDetailsModalProps> = ({
   isOpen,
   onClose,
@@ -59,7 +65,7 @@ const TodoDetailsModal: React.FC<TodoDetailsModalProps> = ({
           {todo.dueDate ? (
             <>
               <strong>Para:</strong>{" "}
-              {new Date(todo.dueDate).toLocaleDateString("pt-BR", {
+              {parseLocalDate(todo.dueDate).toLocaleDateString("pt-BR", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
